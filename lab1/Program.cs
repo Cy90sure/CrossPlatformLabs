@@ -12,8 +12,8 @@ namespace lab1
             try
             {
                 Console.OutputEncoding = System.Text.Encoding.UTF8;
-                string inputFilePath = args.Length > 0 ? args[0] : "INPUT.TXT";
-                string outputFilePath = System.IO.Path.Combine("lab1", "OUTPUT.TXT");
+                string inputFilePath = args.Length > 0 ? args[0] : Path.Combine("lab1", "INPUT.TXT");
+                string outputFilePath = Path.Combine("lab1", "OUTPUT.TXT");
 
                 string[] lines = System.IO.File.ReadAllLines(inputFilePath);
 
