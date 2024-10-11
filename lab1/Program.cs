@@ -17,23 +17,23 @@ namespace lab1
 
                 string[] lines = System.IO.File.ReadAllLines(inputFilePath);
 
+                Console.WriteLine("\nLab1:");
+                Console.WriteLine("Input data:");
+                Console.WriteLine(string.Join(Environment.NewLine, lines).Trim());
+
                 ValidateInput(lines);
 
                 string result = ProcessLines(lines);
                 System.IO.File.WriteAllText(outputFilePath, result.Trim());
 
-                Console.WriteLine("File OUTPUT.TXT successfully created");
-                Console.WriteLine("LAB #1");
-                Console.WriteLine("Input data:");
-                Console.WriteLine(string.Join(Environment.NewLine, lines).Trim());
-                Console.WriteLine("Output data:");
+                
+                Console.WriteLine("\nOutput data:");
                 Console.WriteLine(result.Trim());
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-            Console.WriteLine('\n');
         }
 
         public static void ValidateInput(string[] lines)

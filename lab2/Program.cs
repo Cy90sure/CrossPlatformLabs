@@ -16,18 +16,25 @@ namespace lab2
                 string inputFilePath = args.Length > 0 ? args[0] : Path.Combine("lab2", "INPUT.TXT");
                 string outputFilePath = Path.Combine("lab2", "OUTPUT.TXT");
 
+                Console.WriteLine("\nLab2:");
+                Console.WriteLine("Input data:");
+                var inputLines = File.ReadAllLines(inputFilePath);
+                foreach (var line in inputLines)
+                {
+                    Console.WriteLine(line);
+                }
+                Console.WriteLine();
+
                 int totalLength = CalculateMinimumSpanningTree(inputFilePath);
 
                 System.IO.File.WriteAllText(outputFilePath, totalLength.ToString());
 
-                Console.WriteLine("File OUTPUT.TXT successfully created");
-                Console.WriteLine($"Minimum Spanning Tree Length: {totalLength}");
+                Console.WriteLine($"\nOutput data: {totalLength}");
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
-            Console.WriteLine('\n');
         }
 
         public static int CalculateMinimumSpanningTree(string inputFilePath)
