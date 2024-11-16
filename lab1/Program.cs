@@ -45,7 +45,7 @@ namespace lab1
 
             foreach (string line in lines)
             {
-                if (string.IsNullOrWhiteSpace(line) || line.Split().Length != 2)
+                if (string.IsNullOrWhiteSpace(line) || line.Contains(" "))
                 {
                     throw new InvalidOperationException("Each line must contain exactly two numbers separated by a space.");
                 }
@@ -89,14 +89,14 @@ namespace lab1
 
             if (ls.Count == 1)
             {
-                return "POSSIBLE";
+                return "POSSIBLE".ToString().Replace("\r\n", "\n");
             }
 
             if (ls.Count == 2 &&
                 kv == 2 &&
                 (lst[0] == lst[7] || lst[11] == lst[4]))
             {
-                return "POSSIBLE";
+                return "POSSIBLE".ToString().Replace("\r\n", "\n");
             }
 
             if (lst[0] == lst[3] &&
@@ -105,10 +105,10 @@ namespace lab1
                 ls.Count == 3 &&
                 kv == 0)
             {
-                return "POSSIBLE";
+                return "POSSIBLE".ToString().Replace("\r\n", "\n");
             }
 
-            return "IMPOSSIBLE";
+            return "IMPOSSIBLE".ToString().Replace("\r\n", "\n");
         }
     }
 }

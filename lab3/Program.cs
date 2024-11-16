@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace lab3
 {
@@ -15,7 +16,9 @@ namespace lab3
                 string inputFilePath = args.Length > 0 ? args[0] : Path.Combine("lab3", "INPUT.TXT");
                 string outputFilePath = Path.Combine("lab3", "OUTPUT.TXT");
 
-                char[,] board = LoadBoard(inputFilePath);
+                string[] lines = File.ReadAllLines(inputFilePath);
+
+                char[,] board = LoadBoard(lines);
 
                 Console.WriteLine("\nLab1:");
                 Console.WriteLine("Input Board:");
@@ -23,7 +26,8 @@ namespace lab3
 
                 (List<(int, int)> whiteCanTake, List<(int, int)> blackCanTake) = FindTakes(board);
 
-                WriteOutput(outputFilePath, whiteCanTake, blackCanTake);
+                string result = WriteOutput(lines, whiteCanTake, blackCanTake);
+                File.WriteAllText(outputFilePath, result.Trim());
 
                 Console.WriteLine("\nOutput data:");
                 DisplayResults(whiteCanTake, blackCanTake);
@@ -34,9 +38,9 @@ namespace lab3
             }
         }
 
-        public static char[,] LoadBoard(string inputFilePath)
+        public static char[,] LoadBoard(string[] lines)
         {
-            var lines = File.ReadAllLines(inputFilePath);
+            
             char[,] board = new char[8, 8];
 
             for (int i = 0; i < 8; i++)
@@ -124,30 +128,32 @@ namespace lab3
             return row >= 0 && row < 8 && col >= 0 && col < 8;
         }
 
-        public static void WriteOutput(string outputFilePath, List<(int, int)> whiteCanTake, List<(int, int)> blackCanTake)
+        public static string WriteOutput(string[] lines, List<(int, int)> whiteCanTake, List<(int, int)> blackCanTake)
         {
-            using (StreamWriter writer = new StreamWriter(outputFilePath))
-            {
-                writer.WriteLine($"White: {whiteCanTake.Count}");
-                if (whiteCanTake.Count > 0)
-                {
-                    whiteCanTake.Sort();
-                    foreach (var pos in whiteCanTake)
-                    {
-                        writer.WriteLine($"({pos.Item1 + 1}, {pos.Item2 + 1})");
-                    }
-                }
+            StringBuilder result = new StringBuilder();
 
-                writer.WriteLine($"Black: {blackCanTake.Count}");
-                if (blackCanTake.Count > 0)
+            result.AppendLine($"White: {whiteCanTake.Count}\n");
+
+            if (whiteCanTake.Count > 0)
+            {
+                whiteCanTake.Sort();
+                foreach (var pos in whiteCanTake)
                 {
-                    blackCanTake.Sort();
-                    foreach (var pos in blackCanTake)
-                    {
-                        writer.WriteLine($"({pos.Item1 + 1}, {pos.Item2 + 1})");
-                    }
+                    result.AppendLine($"({pos.Item1 + 1}, {pos.Item2 + 1})\n");
                 }
             }
+
+            result.AppendLine($"Black: {blackCanTake.Count}\n");
+            if (blackCanTake.Count > 0)
+            {
+                blackCanTake.Sort();
+                foreach (var pos in blackCanTake)
+                {
+                    result.AppendLine($"({pos.Item1 + 1}, {pos.Item2 + 1})\n");
+                }
+            }
+
+            return result.ToString();
         }
 
         public static void DisplayResults(List<(int, int)> whiteCanTake, List<(int, int)> blackCanTake)

@@ -25,7 +25,7 @@ namespace lab2
                 }
                 Console.WriteLine();
 
-                int totalLength = CalculateMinimumSpanningTree(inputFilePath);
+                int totalLength = CalculateMinimumSpanningTree(inputLines);
 
                 System.IO.File.WriteAllText(outputFilePath, totalLength.ToString());
 
@@ -37,9 +37,8 @@ namespace lab2
             }
         }
 
-        public static int CalculateMinimumSpanningTree(string inputFilePath)
+        public static int CalculateMinimumSpanningTree(string[] lines)
         {
-            var lines = File.ReadAllLines(inputFilePath);
             int n = int.Parse(lines[0]);
             var nails = lines[1].Split(' ').Select(int.Parse).ToArray();
 

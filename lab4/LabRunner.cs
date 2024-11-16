@@ -43,12 +43,12 @@ namespace lab4
                 Console.OutputEncoding = Encoding.UTF8;
                 string[] lines = File.ReadAllLines(inputFile);
 
-                int result = lab2.Program.CalculateMinimumSpanningTree(inputFile); // Обробка даних
+                int result = lab2.Program.CalculateMinimumSpanningTree(lines); // Обробка даних
 
                 File.WriteAllText(outputFile, result.ToString().Trim()); // Запис результату в файл
 
                 Console.WriteLine("File OUTPUT.TXT successfully created");
-                Console.WriteLine("LAB #1");
+                Console.WriteLine("LAB #2");
                 Console.WriteLine("Input data:");
                 Console.WriteLine(string.Join(Environment.NewLine, lines).Trim());
                 Console.WriteLine("Output data:");
@@ -66,14 +66,14 @@ namespace lab4
                 Console.OutputEncoding = Encoding.UTF8;
                 string[] lines = File.ReadAllLines(inputFile);
 
-                char[,] board = lab3.Program.LoadBoard(inputFile);
+                char[,] board = lab3.Program.LoadBoard(lines);
 
                 (List<(int, int)> whiteCanTake, List<(int, int)> blackCanTake) = lab3.Program.FindTakes(board);
-                lab3.Program.WriteOutput(inputFile, whiteCanTake, blackCanTake);
+                lab3.Program.WriteOutput(lines, whiteCanTake, blackCanTake);
 
                 
                 Console.WriteLine("File OUTPUT.TXT successfully created");
-                Console.WriteLine("LAB #1");
+                Console.WriteLine("LAB #3");
                 Console.WriteLine("Input data:");
                 Console.WriteLine(string.Join(Environment.NewLine, lines).Trim());
 
