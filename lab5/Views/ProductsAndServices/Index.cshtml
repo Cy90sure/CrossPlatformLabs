@@ -1,0 +1,29 @@
+﻿@model List<lab5.Models.ProductAndService>
+
+@{
+    ViewData["Title"] = "Products and Services";
+}
+
+<h1>Products and Services</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Type Code</th>
+            <th>Details</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductSvcId</td>
+                <td>@item.ProductSvcTypeCode</td>
+                <td>@item.ProductSvcDetails</td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,33 @@
+﻿@model List<lab5.Models.Country>
+
+@{
+    ViewData["Title"] = "Countries";
+}
+
+<h1>Countries</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Country Code</th>
+            <th>Name</th>
+            <th>Currency</th>
+            <th>Languages Spoken</th>
+            <th>Exchange Rate (USD)</th>
+            <th>Exchange Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var country in Model)
+        {
+            <tr>
+                <td>@country.CountryCode</td>
+                <td>@country.CountryName</td>
+                <td>@country.CountryCurrency</td>
+                <td>@country.LanguagesSpoken</td>
+                <td>@country.UsdExchangeRate</td>
+                <td>@country.UsdExchangeDate.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </tbody>
+</table>

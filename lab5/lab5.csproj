@@ -9,12 +9,17 @@
   <ItemGroup>
     <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="8.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\lab1\lab1.csproj" />
     <ProjectReference Include="..\lab2\lab2.csproj" />
     <ProjectReference Include="..\lab3\lab3.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Organization\" />
   </ItemGroup>
 
 </Project>

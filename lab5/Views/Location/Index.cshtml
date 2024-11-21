@@ -1,0 +1,29 @@
+﻿@model List<lab5.Models.Location>
+
+@{
+    ViewData["Title"] = "Locations";
+}
+
+<h1>Locations</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Location ID</th>
+            <th>Type Code</th>
+            <th>Address</th>
+            <th>Other Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var location in Model)
+        {
+            <tr>
+                <td>@location.LocationId</td>
+                <td>@location.LocationTypeCode</td>
+                <td>@location.LocationAddress</td>
+                <td>@location.OtherDetails</td>
+            </tr>
+        }
+    </tbody>
+</table>

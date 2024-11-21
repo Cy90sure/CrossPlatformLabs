@@ -23,10 +23,18 @@
                                 <a asp-controller="Lab" asp-action="Lab3">Лаб 3</a>
                             </div>
                         </li>
-                    }
 
-                    @if (User.Identity.IsAuthenticated)
-                    {
+                        <li class="dropdown">
+                            <p class="btn btn-primary">Таблиці Лаб 6</p>
+                            <div class="dropdown-menu">
+                                <a asp-controller="ProductsAndServices" asp-action="Index">ProductsAndServices</a>
+                                <a asp-controller="Organization" asp-action="Index">Organization</a>
+                                <a asp-controller="Country" asp-action="Index">Country</a>
+                                <a asp-controller="Location" asp-action="Index">Location</a>
+                                <a asp-controller="MovementLocation" asp-action="Index">MovementLocation</a>
+                            </div>
+                        </li>
+
                         <li class="dropdown">
                             <p class="btn btn-primary">Акаунт</p>
                             <div class="dropdown-menu">

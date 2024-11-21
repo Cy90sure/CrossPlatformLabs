@@ -1,0 +1,35 @@
+﻿@model List<lab5.Models.MovementLocation>
+
+@{
+    ViewData["Title"] = "Movement Locations";
+}
+
+<h1>Movement Locations</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Shipment Location ID</th>
+            <th>Shipment ID</th>
+            <th>From Location</th>
+            <th>To Location</th>
+            <th>Date Started</th>
+            <th>Date Completed</th>
+            <th>Other Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movement in Model)
+        {
+            <tr>
+                <td>@movement.ShipmentLocationId</td>
+                <td>@movement.ShipmentId</td>
+                <td>@movement.FromLocation?.LocationAddress</td>
+                <td>@movement.ToLocation?.LocationAddress</td>
+                <td>@movement.DateStarted.ToString("yyyy-MM-dd")</td>
+                <td>@movement.DateCompleted.ToString("yyyy-MM-dd")</td>
+                <td>@movement.OtherDetails</td>
+            </tr>
+        }
+    </tbody>
+</table>
