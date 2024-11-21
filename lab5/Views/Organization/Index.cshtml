@@ -4,24 +4,33 @@
     ViewData["Title"] = "Organizations";
 }
 
-<h1>Organizations</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Organization ID</th>
-            <th>Type Code</th>
-            <th>Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var organization in Model)
-        {
-            <tr>
-                <td>@organization.OrganizationId</td>
-                <td>@organization.OrganizationTypeCode</td>
-                <td>@organization.OrganizationDetails</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1>Organizations - центральна таблиця</h1>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Organization ID</th>
+                        <th>Type Code</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var organization in Model)
+                    {
+                        <tr>
+                            <td>@organization.OrganizationId</td>
+                            <td>@organization.OrganizationTypeCode</td>
+                            <td>@organization.OrganizationDetails</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+

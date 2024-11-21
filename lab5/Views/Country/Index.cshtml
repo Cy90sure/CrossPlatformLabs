@@ -2,32 +2,68 @@
 
 @{
     ViewData["Title"] = "Countries";
+    var filteredModel = Model;
+
+    if (!string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["countryCode"]))
+    {
+        string countryCode = ViewContext.HttpContext.Request.Query["countryCode"];
+        filteredModel = filteredModel
+            .Where(c => !string.IsNullOrEmpty(c.CountryCode) && c.CountryCode.Contains(countryCode, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
 }
 
-<h1>Countries</h1>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1>Countries - пошук за списком елементів</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Country Code</th>
-            <th>Name</th>
-            <th>Currency</th>
-            <th>Languages Spoken</th>
-            <th>Exchange Rate (USD)</th>
-            <th>Exchange Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var country in Model)
-        {
-            <tr>
-                <td>@country.CountryCode</td>
-                <td>@country.CountryName</td>
-                <td>@country.CountryCurrency</td>
-                <td>@country.LanguagesSpoken</td>
-                <td>@country.UsdExchangeRate</td>
-                <td>@country.UsdExchangeDate.ToString("yyyy-MM-dd")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <form method="get" class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="countryCode" class="form-label">Country Code</label>
+                        <input type="text" id="countryCode" name="countryCode" class="form-control" value="@ViewContext.HttpContext.Request.Query["countryCode"]" placeholder="Enter country code..." />
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Country Code</th>
+                        <th>Country Name</th>
+                        <th>Currency</th>
+                        <th>Languages Spoken</th>
+                        <th>Exchange Rate (USD)</th>
+                        <th>Exchange Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (filteredModel.Any())
+                    {
+                        @foreach (var country in filteredModel)
+                        {
+                            <tr>
+                                <td>@country.CountryCode</td>
+                                <td>@country.CountryName</td>
+                                <td>@country.CountryCurrency</td>
+                                <td>@country.LanguagesSpoken</td>
+                                <td>@country.UsdExchangeRate</td>
+                                <td>@country.UsdExchangeDate.ToString("yyyy-MM-dd")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">No records found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -2,34 +2,85 @@
 
 @{
     ViewData["Title"] = "Movement Locations";
+    var filteredModel = Model;
+
+    if (!string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["startDate"]))
+    {
+        DateTime startDate;
+        if (DateTime.TryParse(ViewContext.HttpContext.Request.Query["startDate"], out startDate))
+        {
+            filteredModel = filteredModel.Where(m => m.DateStarted.Date >= startDate.Date).ToList();
+        }
+    }
+
+    if (!string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["endDate"]))
+    {
+        DateTime endDate;
+        if (DateTime.TryParse(ViewContext.HttpContext.Request.Query["endDate"], out endDate))
+        {
+            filteredModel = filteredModel.Where(m => m.DateCompleted.Date <= endDate.Date).ToList();
+        }
+    }
 }
 
-<h1>Movement Locations</h1>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1>Movement Locations - сортування за часом + JOIN</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Shipment Location ID</th>
-            <th>Shipment ID</th>
-            <th>From Location</th>
-            <th>To Location</th>
-            <th>Date Started</th>
-            <th>Date Completed</th>
-            <th>Other Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var movement in Model)
-        {
-            <tr>
-                <td>@movement.ShipmentLocationId</td>
-                <td>@movement.ShipmentId</td>
-                <td>@movement.FromLocation?.LocationAddress</td>
-                <td>@movement.ToLocation?.LocationAddress</td>
-                <td>@movement.DateStarted.ToString("yyyy-MM-dd")</td>
-                <td>@movement.DateCompleted.ToString("yyyy-MM-dd")</td>
-                <td>@movement.OtherDetails</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <form method="get" class="mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control" value="@ViewContext.HttpContext.Request.Query["startDate"]" />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="endDate" class="form-label">End Date</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control" value="@ViewContext.HttpContext.Request.Query["endDate"]" />
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Shipment Location ID</th>
+                        <th>Shipment ID</th>
+                        <th>From Location</th>
+                        <th>To Location</th>
+                        <th>Date Started</th>
+                        <th>Date Completed</th>
+                        <th>Other Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (filteredModel.Any())
+                    {
+                        @foreach (var movement in filteredModel)
+                        {
+                            <tr>
+                                <td>@movement.ShipmentLocationId</td>
+                                <td>@movement.ShipmentId</td>
+                                <td>@movement.FromLocation?.LocationAddress</td>
+                                <td>@movement.ToLocation?.LocationAddress</td>
+                                <td>@movement.DateStarted.ToString("yyyy-MM-dd")</td>
+                                <td>@movement.DateCompleted.ToString("yyyy-MM-dd")</td>
+                                <td>@movement.OtherDetails</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">No records found</td>
+                        </tr>
+                    }
+                </tbody>
+        </div>
+    </div>
+
+</div>
+

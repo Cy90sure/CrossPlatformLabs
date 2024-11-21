@@ -2,28 +2,64 @@
 
 @{
     ViewData["Title"] = "Locations";
+    var filteredModel = Model;
+
+    if (!string.IsNullOrEmpty(ViewContext.HttpContext.Request.Query["locationAddress"]))
+    {
+        string locationAddressQuery = ViewContext.HttpContext.Request.Query["locationAddress"];
+        filteredModel = filteredModel
+            .Where(l => !string.IsNullOrEmpty(l.LocationAddress) && l.LocationAddress.Contains(locationAddressQuery, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+    }
 }
 
-<h1>Locations</h1>
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h1>Locations - пошук за початком та кінцем значення</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Location ID</th>
-            <th>Type Code</th>
-            <th>Address</th>
-            <th>Other Details</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var location in Model)
-        {
-            <tr>
-                <td>@location.LocationId</td>
-                <td>@location.LocationTypeCode</td>
-                <td>@location.LocationAddress</td>
-                <td>@location.OtherDetails</td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <form method="get" class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="locationAddress" class="form-label">Location Address</label>
+                        <input type="text" id="locationAddress" name="locationAddress" class="form-control" value="@ViewContext.HttpContext.Request.Query["locationAddress"]" placeholder="Enter part of the address..." />
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </form>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Location ID</th>
+                        <th>Type Code</th>
+                        <th>Address</th>
+                        <th>Other Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (filteredModel.Any())
+                    {
+                        @foreach (var location in filteredModel)
+                        {
+                            <tr>
+                                <td>@location.LocationId</td>
+                                <td>@location.LocationTypeCode</td>
+                                <td>@location.LocationAddress</td>
+                                <td>@location.OtherDetails</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center">No records found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
