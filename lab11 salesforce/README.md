@@ -1,0 +1,1 @@
+Developed a Salesforce view for lab6. The API for lab6 (LR №6) has been successfully deployed. Additionally, for testing purposes, a custom address object was created, and data from the database was populated into it.
